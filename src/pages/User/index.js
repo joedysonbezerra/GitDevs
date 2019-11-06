@@ -18,7 +18,7 @@ export default function User({ match }) {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:8080/users/${match.params.name}`)
+      .get(`http://localhost:3000/users/${match.params.name}`)
       .then(({ data }) => {
         setUser(data);
         setLoading(false);

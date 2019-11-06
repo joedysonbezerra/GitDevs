@@ -11,33 +11,18 @@ export default function Main() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/users").then(({ data }) => setUsers(data));
+    axios.get("http://localhost:3000/users").then(({ data }) => setUsers(data));
   }, []);
   useEffect(() => {
-    axios.get("http://localhost:8080/users").then(({ data }) => setUsers(data));
+    axios.get("http://localhost:3000/users").then(({ data }) => setUsers(data));
   }, [users]);
 
   async function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
     try {
-      const {
-        data: { name, login, avatar_url, location, bio, email, html_url: link }
-      } = await axios.get(`https://api.github.com/users/${user}`);
-
-      const { data: newUser } = await axios.post(
-        "http://localhost:8080/users",
-        {
-          name,
-          login,
-          avatar_url,
-          location,
-          bio,
-          email,
-          link
-        }
-      );
-
+      const newUser  = await axios.post(`http://localhost:3000/users/${user}`);
+      console.log(newUser);
       setUser("");
       setLoading(false);
       setUsers([...users, newUser]);
@@ -83,7 +68,7 @@ export default function Main() {
             key={user.login}
             onDoubleClick={async () => {
               setUsers([]);
-              await axios.delete(`http://localhost:8080/users/${user.login}`);
+              await axios.delete(`http://localhost:3000/users/${user.login}`);
             }}
           >
             <img src={user.avatar_url} alt={user.login} />
